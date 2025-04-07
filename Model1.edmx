@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SchoolDB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCourses">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Credits" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblDepartments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Budget" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblEnrollments">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="nvarchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="tblInstructors">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HireDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStudents">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EnrollmentDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblCourse__Depar__3B75D760">
+          <End Role="tblDepartments" Type="Self.tblDepartments" Multiplicity="1" />
+          <End Role="tblCourses" Type="Self.tblCourses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="tblCourses">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEnroll__Cours__403A8C7D">
+          <End Role="tblCourses" Type="Self.tblCourses" Multiplicity="1" />
+          <End Role="tblEnrollments" Type="Self.tblEnrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCourses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="tblEnrollments">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEnroll__Stude__412EB0B6">
+          <End Role="tblStudents" Type="Self.tblStudents" Multiplicity="1" />
+          <End Role="tblEnrollments" Type="Self.tblEnrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStudents">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="tblEnrollments">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDB2ModelStoreContainer">
+          <EntitySet Name="tblCourses" EntityType="Self.tblCourses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDepartments" EntityType="Self.tblDepartments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEnrollments" EntityType="Self.tblEnrollments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInstructors" EntityType="Self.tblInstructors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStudents" EntityType="Self.tblStudents" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblCourse__Depar__3B75D760" Association="Self.FK__tblCourse__Depar__3B75D760">
+            <End Role="tblDepartments" EntitySet="tblDepartments" />
+            <End Role="tblCourses" EntitySet="tblCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEnroll__Cours__403A8C7D" Association="Self.FK__tblEnroll__Cours__403A8C7D">
+            <End Role="tblCourses" EntitySet="tblCourses" />
+            <End Role="tblEnrollments" EntitySet="tblEnrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEnroll__Stude__412EB0B6" Association="Self.FK__tblEnroll__Stude__412EB0B6">
+            <End Role="tblStudents" EntitySet="tblStudents" />
+            <End Role="tblEnrollments" EntitySet="tblEnrollments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolDB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblCours">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Credits" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblDepartment" Relationship="Self.FK__tblCourse__Depar__3B75D760" FromRole="tblCourses" ToRole="tblDepartments" />
+          <NavigationProperty Name="tblEnrollments" Relationship="Self.FK__tblEnroll__Cours__403A8C7D" FromRole="tblCourses" ToRole="tblEnrollments" />
+        </EntityType>
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Budget" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblCourses" Relationship="Self.FK__tblCourse__Depar__3B75D760" FromRole="tblDepartments" ToRole="tblCourses" />
+        </EntityType>
+        <EntityType Name="tblEnrollment">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="Grade" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCours" Relationship="Self.FK__tblEnroll__Cours__403A8C7D" FromRole="tblEnrollments" ToRole="tblCourses" />
+          <NavigationProperty Name="tblStudent" Relationship="Self.FK__tblEnroll__Stude__412EB0B6" FromRole="tblEnrollments" ToRole="tblStudents" />
+        </EntityType>
+        <EntityType Name="tblInstructor">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="tblStudent">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EnrollmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblEnrollments" Relationship="Self.FK__tblEnroll__Stude__412EB0B6" FromRole="tblStudents" ToRole="tblEnrollments" />
+        </EntityType>
+        <Association Name="FK__tblCourse__Depar__3B75D760">
+          <End Role="tblDepartments" Type="Self.tblDepartment" Multiplicity="1" />
+          <End Role="tblCourses" Type="Self.tblCours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="tblCourses">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEnroll__Cours__403A8C7D">
+          <End Role="tblCourses" Type="Self.tblCours" Multiplicity="1" />
+          <End Role="tblEnrollments" Type="Self.tblEnrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCourses">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="tblEnrollments">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEnroll__Stude__412EB0B6">
+          <End Role="tblStudents" Type="Self.tblStudent" Multiplicity="1" />
+          <End Role="tblEnrollments" Type="Self.tblEnrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStudents">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="tblEnrollments">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDB2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCourses" EntityType="Self.tblCours" />
+          <EntitySet Name="tblDepartments" EntityType="Self.tblDepartment" />
+          <EntitySet Name="tblEnrollments" EntityType="Self.tblEnrollment" />
+          <EntitySet Name="tblInstructors" EntityType="Self.tblInstructor" />
+          <EntitySet Name="tblStudents" EntityType="Self.tblStudent" />
+          <AssociationSet Name="FK__tblCourse__Depar__3B75D760" Association="Self.FK__tblCourse__Depar__3B75D760">
+            <End Role="tblDepartments" EntitySet="tblDepartments" />
+            <End Role="tblCourses" EntitySet="tblCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEnroll__Cours__403A8C7D" Association="Self.FK__tblEnroll__Cours__403A8C7D">
+            <End Role="tblCourses" EntitySet="tblCourses" />
+            <End Role="tblEnrollments" EntitySet="tblEnrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEnroll__Stude__412EB0B6" Association="Self.FK__tblEnroll__Stude__412EB0B6">
+            <End Role="tblStudents" EntitySet="tblStudents" />
+            <End Role="tblEnrollments" EntitySet="tblEnrollments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchoolDB2ModelStoreContainer" CdmEntityContainer="SchoolDB2Entities">
+          <EntitySetMapping Name="tblCourses">
+            <EntityTypeMapping TypeName="SchoolDB2Model.tblCours">
+              <MappingFragment StoreEntitySet="tblCourses">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Credits" ColumnName="Credits" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDepartments">
+            <EntityTypeMapping TypeName="SchoolDB2Model.tblDepartment">
+              <MappingFragment StoreEntitySet="tblDepartments">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEnrollments">
+            <EntityTypeMapping TypeName="SchoolDB2Model.tblEnrollment">
+              <MappingFragment StoreEntitySet="tblEnrollments">
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInstructors">
+            <EntityTypeMapping TypeName="SchoolDB2Model.tblInstructor">
+              <MappingFragment StoreEntitySet="tblInstructors">
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStudents">
+            <EntityTypeMapping TypeName="SchoolDB2Model.tblStudent">
+              <MappingFragment StoreEntitySet="tblStudents">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,50 @@
+﻿@model SchoolManagementApp.tblEnrollment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>tblEnrollment</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Grade)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Grade)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tblCours.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tblCours.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tblStudent.FirstName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tblStudent.FirstName)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.EnrollmentID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
